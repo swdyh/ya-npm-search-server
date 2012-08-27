@@ -1,0 +1,92 @@
+{
+    "update": {
+        "properties": {
+            "size": {
+                "type": "long"
+            },
+            "total": {
+                "type": "long"
+            },
+            "updated": {
+                "type": "long"
+            }
+        },
+        "_timestamp": { "enabled": true }
+    },
+    "meta": {
+        "enabled": false,
+        "_timestamp": { "enabled": true }
+    },
+    "package": {
+        "properties": {
+            "name": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string"
+            },
+            "keywords": {
+                "type": "string"
+            },
+            "stared": {
+                "type": "long"
+            },
+            "depended": {
+                "type": "long"
+            },
+            "author": {
+                "dynamic": "true",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "include_in_all" : false
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string",
+                        "include_in_all" : false
+                    }
+                }
+            },
+            "maintainers": {
+                "dynamic": "true",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "include_in_all" : false
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "time": {
+                "dynamic": "true",
+                "properties": {
+                    "modified": {
+                        "type": "date",
+                        "format": "dateOptionalTime"
+                    }
+                }
+            },
+            "repository" : {
+                "type" : "object",
+                "include_in_all" : false
+            },
+            "dist-tags": {
+                "type" : "object",
+                "include_in_all" : false
+            },
+            "users": {
+                "type" : "string",
+                "include_in_all" : false
+            },
+            "versions": {
+                "type" : "string",
+                "include_in_all" : false
+            }
+        }
+    }
+}

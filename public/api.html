@@ -1,0 +1,326 @@
+<html>
+  <head>
+    <title>Yet Another npm Search</title>
+    <link type="text/css" rel="stylesheet" href="main.css" />
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+  <body>
+    <h1><a href="/"><img src="search.svg" />Yet Another npm Search</a></h1>
+    <div class="powerd">
+      powered by elasticsearch:
+      &nbsp;
+      &nbsp;
+      <a href="about.html">About</a>
+      &nbsp;
+      <a href="api.html">API</a>
+    </div>
+          <div class="api">
+        <h2>API</h2>
+<ul>
+<li><a href="#search">search</a></li>
+<li><a href="#raw_elasticsearch_search">raw elasticsearch search</a></li>
+</ul>
+<p>access control</p>
+<pre><code>Access-Control-Allow-Origin: *
+</code></pre>
+<h3 id="search">search</h3>
+<p>params</p>
+<ul>
+<li>query: query string</li>
+<li>sort: depended or recent stared or score</li>
+<li>format: json</li>
+</ul>
+<p>curl:</p>
+<pre><code>% curl 'http://ya-npm-search.herokuapp.com/search?format=json&amp;query=redis&amp;size=3'
+</code></pre>
+<p>response:</p>
+<pre><code>{
+  &quot;query&quot;: &quot;redis&quot;,
+  &quot;total&quot;: 202,
+  &quot;results&quot;: [
+    {
+      &quot;name&quot;: &quot;redis&quot;,
+      &quot;description&quot;: &quot;Redis client library&quot;,
+      &quot;dist-tags&quot;: {
+        &quot;latest&quot;: &quot;0.7.2&quot;
+      },
+      &quot;maintainers&quot;: [
+        {
+          &quot;name&quot;: &quot;mjr&quot;,
+          &quot;email&quot;: &quot;&quot;,
+          &quot;gravatar&quot;: &quot;http://www.gravatar.com/avatar/f2602cabcccbe70f6e73e0c86379921d&quot;,
+          &quot;npm&quot;: &quot;https://npmjs.org/browse/author/mjr&quot;
+        }
+      ],
+      &quot;author&quot;: {
+        &quot;name&quot;: &quot;Matt Ranney&quot;,
+        &quot;email&quot;: &quot;&quot;
+      },
+      &quot;repository&quot;: {
+        &quot;type&quot;: &quot;git&quot;,
+        &quot;url&quot;: &quot;git://github.com/mranney/node_redis.git&quot;
+      },
+      &quot;time&quot;: {
+        &quot;modified&quot;: &quot;2012-08-07T18:16:36.255Z&quot;
+      },
+      &quot;versions&quot;: [
+        &quot;0.7.2&quot;
+      ],
+      &quot;depended&quot;: 262,
+      &quot;stared&quot;: 17,
+      &quot;keywords&quot;: null,
+      &quot;github&quot;: {
+        &quot;url&quot;: &quot;https://github.com/mranney/node_redis&quot;
+      }
+    },
+    {
+      &quot;name&quot;: &quot;connect-redis&quot;,
+      &quot;description&quot;: &quot;Redis session store for Connect&quot;,
+      &quot;dist-tags&quot;: {
+        &quot;latest&quot;: &quot;1.4.1&quot;
+      },
+      &quot;maintainers&quot;: [
+        {
+          &quot;name&quot;: &quot;tjholowaychuk&quot;,
+          &quot;email&quot;: &quot;&quot;,
+          &quot;gravatar&quot;: &quot;http://www.gravatar.com/avatar/f1e3ab214a976a39cfd713bc93deb10f&quot;,
+          &quot;npm&quot;: &quot;https://npmjs.org/browse/author/tjholowaychuk&quot;
+        }
+      ],
+      &quot;author&quot;: {
+        &quot;name&quot;: &quot;TJ Holowaychuk&quot;,
+        &quot;email&quot;: &quot;&quot;
+      },
+      &quot;time&quot;: {
+        &quot;modified&quot;: &quot;2012-08-04T13:28:01.778Z&quot;
+      },
+      &quot;versions&quot;: [
+        &quot;1.4.1&quot;
+      ],
+      &quot;depended&quot;: 22,
+      &quot;stared&quot;: 3,
+      &quot;keywords&quot;: null
+    },
+    {
+      &quot;name&quot;: &quot;jugglingdb&quot;,
+      &quot;description&quot;: &quot;ORM for every database: redis, mysql, neo4j, mongodb, postgres, sqlite&quot;,
+      &quot;dist-tags&quot;: {
+        &quot;latest&quot;: &quot;0.1.13&quot;
+      },
+      &quot;maintainers&quot;: [
+        {
+          &quot;name&quot;: &quot;anatoliy&quot;,
+          &quot;email&quot;: &quot;&quot;,
+          &quot;gravatar&quot;: &quot;http://www.gravatar.com/avatar/00bcc518cddfa8502e2e8e219f3cdfb1&quot;,
+          &quot;npm&quot;: &quot;https://npmjs.org/browse/author/anatoliy&quot;
+        }
+      ],
+      &quot;author&quot;: {
+        &quot;name&quot;: &quot;Anatoliy Chakkaev&quot;,
+        &quot;email&quot;: &quot;&quot;
+      },
+      &quot;repository&quot;: {
+        &quot;type&quot;: &quot;git&quot;,
+        &quot;url&quot;: &quot;git://github.com/1602/jugglingdb.git&quot;
+      },
+      &quot;time&quot;: {
+        &quot;modified&quot;: &quot;2012-08-16T10:22:29.847Z&quot;
+      },
+      &quot;versions&quot;: [
+        &quot;0.1.13&quot;
+      ],
+      &quot;depended&quot;: 5,
+      &quot;stared&quot;: 2,
+      &quot;keywords&quot;: null,
+      &quot;github&quot;: {
+        &quot;url&quot;: &quot;https://github.com/1602/jugglingdb&quot;
+      }
+    }
+  ],
+  &quot;next&quot;: {
+    &quot;url&quot;: &quot;/search?format=json&amp;query=redis&amp;size=3&amp;from=20&quot;
+  }
+}
+</code></pre>
+<h3 id="raw_elasticsearch_search">raw elasticsearch search</h3>
+<p>proxyed elasticsearch search API.</p>
+<p><a href="http://www.elasticsearch.org/guide/reference/api/search/">http://www.elasticsearch.org/guide/reference/api/search/</a> <br />
+<a href="http://www.elasticsearch.org/guide/reference/query-dsl/">http://www.elasticsearch.org/guide/reference/query-dsl/</a> <br/ ></p>
+<p>use POST method</p>
+<p>curl:</p>
+<pre><code>curl -H 'Content-Type: application/json' 'http://ya-npm-search.herokuapp.com/api/raw_es_search' -d '
+  {
+    &quot;query&quot;: {
+      &quot;query_string&quot;:
+        { &quot;query&quot;: &quot;mysql&quot;}
+      },
+    &quot;sort&quot;: [{ &quot;stared&quot;: &quot;desc&quot; }],
+    &quot;size&quot;: 3
+  }
+'
+</code></pre>
+<p>response:</p>
+<pre><code>{
+  &quot;took&quot;: 7,
+  &quot;timed_out&quot;: false,
+  &quot;_shards&quot;: {
+    &quot;total&quot;: 5,
+    &quot;successful&quot;: 5,
+    &quot;failed&quot;: 0
+  },
+  &quot;hits&quot;: {
+    &quot;total&quot;: 64,
+    &quot;max_score&quot;: null,
+    &quot;hits&quot;: [
+      {
+        &quot;_index&quot;: &quot;npm&quot;,
+        &quot;_type&quot;: &quot;package&quot;,
+        &quot;_id&quot;: &quot;mysql&quot;,
+        &quot;_score&quot;: null,
+        &quot;_source&quot;: {
+          &quot;name&quot;: &quot;mysql&quot;,
+          &quot;dist-tags&quot;: {
+            &quot;latest&quot;: &quot;0.9.6&quot;,
+            &quot;2.0.0-alpha&quot;: &quot;2.0.0-alpha&quot;,
+            &quot;2.0.0-alpha2&quot;: &quot;2.0.0-alpha2&quot;,
+            &quot;alpha3&quot;: &quot;2.0.0-alpha3&quot;
+          },
+          &quot;maintainers&quot;: [
+            {
+              &quot;name&quot;: &quot;felixge&quot;,
+              &quot;email&quot;: &quot;&quot;
+            }
+          ],
+          &quot;description&quot;: &quot;A node.js driver for mysql. It is written in JavaScript, does not require compiling, and is 100% MIT licensed.&quot;,
+          &quot;author&quot;: {
+            &quot;name&quot;: &quot;Felix Geisendörfer&quot;,
+            &quot;email&quot;: &quot;&quot;,
+            &quot;url&quot;: &quot;http://debuggable.com/&quot;
+          },
+          &quot;repository&quot;: {
+            &quot;url&quot;: &quot;&quot;
+          },
+          &quot;users&quot;: [
+            &quot;dresende&quot;,
+            &quot;fgribreau&quot;,
+            &quot;hyq&quot;,
+            &quot;tellnes&quot;
+          ],
+          &quot;time&quot;: {
+            &quot;modified&quot;: &quot;2012-08-04T22:46:44.909Z&quot;
+          },
+          &quot;versions&quot;: [
+            &quot;0.9.6&quot;,
+            &quot;2.0.0-alpha&quot;,
+            &quot;2.0.0-alpha2&quot;,
+            &quot;2.0.0-alpha3&quot;
+          ],
+          &quot;depended&quot;: 61,
+          &quot;stared&quot;: 4
+        },
+        &quot;sort&quot;: [
+          4
+        ]
+      },
+      {
+        &quot;_index&quot;: &quot;npm&quot;,
+        &quot;_type&quot;: &quot;package&quot;,
+        &quot;_id&quot;: &quot;persist&quot;,
+        &quot;_score&quot;: null,
+        &quot;_source&quot;: {
+          &quot;name&quot;: &quot;persist&quot;,
+          &quot;description&quot;: &quot;Node.js ORM framework supporting various relational databases&quot;,
+          &quot;dist-tags&quot;: {
+            &quot;latest&quot;: &quot;0.2.5&quot;
+          },
+          &quot;maintainers&quot;: [
+            {
+              &quot;name&quot;: &quot;joeferner&quot;,
+              &quot;email&quot;: &quot;&quot;
+            }
+          ],
+          &quot;users&quot;: [
+            &quot;joeferner&quot;,
+            &quot;kunklejr&quot;,
+            &quot;fgribreau&quot;
+          ],
+          &quot;author&quot;: {
+            &quot;name&quot;: &quot;Joe Ferner&quot;,
+            &quot;email&quot;: &quot;&quot;
+          },
+          &quot;repository&quot;: {
+            &quot;type&quot;: &quot;git&quot;,
+            &quot;url&quot;: &quot;https://github.com/nearinfinity/node-persist.git&quot;
+          },
+          &quot;time&quot;: {
+            &quot;modified&quot;: &quot;2012-08-02T13:43:54.056Z&quot;
+          },
+          &quot;versions&quot;: [
+            &quot;0.2.5&quot;
+          ],
+          &quot;keywords&quot;: [
+            &quot;database&quot;,
+            &quot;db&quot;,
+            &quot;orm&quot;,
+            &quot;sqlite&quot;,
+            &quot;mysql&quot;,
+            &quot;PostgreSQL&quot;,
+            &quot;oracle&quot;,
+            &quot;db-oracle&quot;
+          ],
+          &quot;depended&quot;: 1,
+          &quot;stared&quot;: 3
+        },
+        &quot;sort&quot;: [
+          3
+        ]
+      },
+      {
+        &quot;_index&quot;: &quot;npm&quot;,
+        &quot;_type&quot;: &quot;package&quot;,
+        &quot;_id&quot;: &quot;jugglingdb&quot;,
+        &quot;_score&quot;: null,
+        &quot;_source&quot;: {
+          &quot;name&quot;: &quot;jugglingdb&quot;,
+          &quot;description&quot;: &quot;ORM for every database: redis, mysql, neo4j, mongodb, postgres, sqlite&quot;,
+          &quot;dist-tags&quot;: {
+            &quot;latest&quot;: &quot;0.1.13&quot;
+          },
+          &quot;maintainers&quot;: [
+            {
+              &quot;name&quot;: &quot;anatoliy&quot;,
+              &quot;email&quot;: &quot;&quot;
+            }
+          ],
+          &quot;author&quot;: {
+            &quot;name&quot;: &quot;Anatoliy Chakkaev&quot;,
+            &quot;email&quot;: &quot;&quot;
+          },
+          &quot;repository&quot;: {
+            &quot;type&quot;: &quot;git&quot;,
+            &quot;url&quot;: &quot;git://github.com/1602/jugglingdb.git&quot;
+          },
+          &quot;users&quot;: [
+            &quot;anatoliy&quot;,
+            &quot;pid&quot;
+          ],
+          &quot;time&quot;: {
+            &quot;modified&quot;: &quot;2012-08-16T10:22:29.847Z&quot;
+          },
+          &quot;versions&quot;: [
+            &quot;0.1.13&quot;
+          ],
+          &quot;depended&quot;: 5,
+          &quot;stared&quot;: 2
+        },
+        &quot;sort&quot;: [
+          2
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+      </div>
+    </body>
+</html>
