@@ -1,5 +1,5 @@
 {
-    "name": "ya-npm-search",
+    "name": "ya-npm-search-server",
     "version": "0.0.1",
     "description": "Yet another npm search powered by elasticsearch.",
     "keywords": [
