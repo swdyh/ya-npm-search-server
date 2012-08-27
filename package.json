@@ -1,0 +1,20 @@
+{
+    "name": "ya-npm-search",
+    "version": "0.0.1",
+    "description": "Yet another npm search powered by elasticsearch.",
+    "keywords": [
+        "npm",
+        "search"
+    ],
+    "dependencies": {
+        "express": "2.5.11",
+        "request": "*",
+        "mustache": "*"
+    },
+    "engines": {
+        "node": "0.8.x",
+        "npm":  "1.1.x"
+    },
+    "author": "swdyh",
+    "license": "Apache License Version 2.0"
+}
