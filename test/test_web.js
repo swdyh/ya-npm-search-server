@@ -39,7 +39,7 @@ function testSearchPageWithFrom(next) {
 }
 
 function testSearchPageWithSort(next) {
-    var u = 'http://localhost:' + port + '/search?query=redis&sort=stared'
+    var u = 'http://localhost:' + port + '/search?query=redis&sort=starred'
     request({
         uri: u,
     }, function(err, res, val) {
@@ -87,7 +87,7 @@ function testSeachAPI(next) {
                     query: 'mysql'
                 }
             },
-            sort: [{ stared: 'desc' }],
+            sort: [{ starred: 'desc' }],
             size: 5
         }
     }, function(err, res, val) {

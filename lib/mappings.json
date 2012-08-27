@@ -28,7 +28,7 @@
             "keywords": {
                 "type": "string"
             },
-            "stared": {
+            "starred": {
                 "type": "long"
             },
             "depended": {

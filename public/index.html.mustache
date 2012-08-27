@@ -24,7 +24,7 @@
         <optgroup label="sort">
           <option value="depended" {{sort_selected_depended}}>depened</option>
           <option value="recent" {{sort_selected_recent}}>recent</option>
-          <option value="stared" {{sort_selected_stared}}>stared</option>
+          <option value="starred" {{sort_selected_starred}}>starred</option>
           <option value="score" {{sort_selected_score}}>score</option>
         </optgroup>
       </select>
@@ -54,7 +54,7 @@
       <h3>
         {{name}}
         &nbsp;
-        <span title="npm_depended: {{depended}} npm_stared: {{stared}}" class="pkg_reactions">{{reactions}}</span>
+        <span title="depended count + starred count" class="pkg_reactions">{{reactions}}</span>
       </h3>
       <div>
         {{#description}}
@@ -68,7 +68,7 @@
             </div>
           {{/keywords}}
           depended: {{depended}}
-          stared: {{stared}}
+          starred: {{starred}}
           modified: {{#time}}{{modified}}{{/time}}
 
           <div style="padding: 0.5em 0;">

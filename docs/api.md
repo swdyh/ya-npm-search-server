@@ -12,7 +12,7 @@ access control
 params
 
   * query: query string
-  * sort: depended or recent stared or score
+  * sort: depended or recent starred or score
   * format: json
 
 curl:
@@ -54,7 +54,7 @@ response:
             "0.7.2"
           ],
           "depended": 262,
-          "stared": 17,
+          "starred": 17,
           "keywords": null,
           "github": {
             "url": "https://github.com/mranney/node_redis"
@@ -85,7 +85,7 @@ response:
             "1.4.1"
           ],
           "depended": 22,
-          "stared": 3,
+          "starred": 3,
           "keywords": null
         },
         {
@@ -117,7 +117,7 @@ response:
             "0.1.13"
           ],
           "depended": 5,
-          "stared": 2,
+          "starred": 2,
           "keywords": null,
           "github": {
             "url": "https://github.com/1602/jugglingdb"
@@ -147,7 +147,7 @@ curl:
           "query_string":
             { "query": "mysql"}
           },
-        "sort": [{ "stared": "desc" }],
+        "sort": [{ "starred": "desc" }],
         "size": 3
       }
     '
@@ -210,7 +210,7 @@ response:
                 "2.0.0-alpha3"
               ],
               "depended": 61,
-              "stared": 4
+              "starred": 4
             },
             "sort": [
               4
@@ -263,7 +263,7 @@ response:
                 "db-oracle"
               ],
               "depended": 1,
-              "stared": 3
+              "starred": 3
             },
             "sort": [
               3
@@ -305,7 +305,7 @@ response:
                 "0.1.13"
               ],
               "depended": 5,
-              "stared": 2
+              "starred": 2
             },
             "sort": [
               2

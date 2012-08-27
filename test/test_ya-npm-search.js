@@ -113,8 +113,8 @@ function testSeqRequest(next) {
 function testMergeViewAttr(next) {
     var from = { rows: [{ key: ['a'], value: 5 }] }
     var to = { a: {} }
-    var r = yaNpmSearch.mergeViewAttr(from, to, 'stared')
-    assert.ok(r.a.stared)
+    var r = yaNpmSearch.mergeViewAttr(from, to, 'starred')
+    assert.ok(r.a.starred)
     next()
 }
 
