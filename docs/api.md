@@ -132,7 +132,7 @@ response:
 
 ## raw elasticsearch search
 
-proxyed elasticsearch search API.
+proxy elasticsearch search API
 
 http://www.elasticsearch.org/guide/reference/api/search/ <br />
 http://www.elasticsearch.org/guide/reference/query-dsl/ <br/ >
