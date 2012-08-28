@@ -18,6 +18,7 @@ run Elasticsearch
     export YA_NPM_SEARCH_ES_INDEX_URL="http://example.com/your_elasticsearch_index"
     git clone https://github.com/swdyh/ya-npm-search-server.git
     cd ya-npm-search-server
+    npm install
     node lib/web
 
 open http://localhost:9990/
