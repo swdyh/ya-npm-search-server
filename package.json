@@ -11,9 +11,15 @@
         "request": "*",
         "mustache": "*"
     },
+    "devDependencies": {
+        "mocha": "*"
+    },
     "engines": {
         "node": "0.8.x",
         "npm":  "1.1.x"
+    },
+    "scripts": {
+        "test": "mocha test/test.js"
     },
     "author": "swdyh",
     "license": "Apache License Version 2.0"
