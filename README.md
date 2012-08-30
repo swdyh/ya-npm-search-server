@@ -1,5 +1,7 @@
 # ya-npm-search-server
 
+[![travis-ci status](https://secure.travis-ci.org/swdyh/ya-npm-search-server.png?branch=master)](http://travis-ci.org/swdyh/ya-npm-search-server)
+
 ![screen capture](https://raw.github.com/swdyh/ya-npm-search-server/master/public/sc001_60.png)
 
 Yet Another npm search
