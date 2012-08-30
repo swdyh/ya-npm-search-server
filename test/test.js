@@ -6,6 +6,7 @@ var web = require(path.join(__dirname, '..', 'lib', 'web'))
 
 var esUrl = (process.env.YA_NPM_SEARCH_TEST_ES_INDEX_URL ||
              'http://localhost:9200/npm-test').replace(/\/$/, '')
+var port = '9991'
 
 describe('ya-npm-search', function() {
 
@@ -143,7 +144,6 @@ describe('ya-npm-search', function() {
 })
 
 describe('web', function() {
-    var port = '9991'
     before(function(done) {
         web.start({ port: port, esUrl: esUrl, silent: true }, done)
     })
