@@ -1,0 +1,41 @@
+    {{#results}}
+    <div class="pkg">
+      <h3>
+        {{name}}
+        &nbsp;
+        <span title="depended count + starred count" class="pkg_reactions">{{reactions}}</span>
+      </h3>
+      <div>
+        {{#description}}
+          <div class="desc">{{description}}</div>
+        {{/description}}
+
+        <div class="meta">
+          {{#keywords}}
+            <div>
+              keywords: {{keywords}}
+            </div>
+          {{/keywords}}
+          depended: {{depended}}
+          starred: {{starred}}
+          modified: {{#time}}{{modified}}{{/time}}
+
+          <div style="padding: 0.5em 0;">
+            <a href="https://npmjs.org/package/{{name}}">https://npmjs.org/package/{{name}}</a>&nbsp;
+            {{#github}}<a href="{{url}}">{{url}}</a>{{/github}}
+          </div>
+
+          <div>
+            {{#maintainers}}
+              {{#gravatar}}<img class="gravatar" src="{{gravatar}}" />{{/gravatar}}
+              <a href="{{npm}}">{{name}}</a>
+            {{/maintainers}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/results}}
+
+    {{#next}}
+      <div><a href="{{url}}" rel="next">next</a></div>
+    {{/next}}
