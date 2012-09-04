@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Yet Another npm Search</title>
+    <link type="text/css" rel="stylesheet" href="main.css" />
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+  <body>
+    <h1><a href="/"><img src="search.svg" />Yet Another npm Search</a></h1>
+    <div class="powerd">
+      powered by elasticsearch:
+      &nbsp;
+      &nbsp;
+      <a href="about.html">About</a>
+      &nbsp;
+      <a href="api.html">API</a>
+    </div>
+
+    {{^hide_search}}
+    <form method="GET" action="/search" class="search">
+      <input id="query" name="query" type="search" value="{{query}}" placeholder="search" />
+      &nbsp;
+      <select name="sort">
+        <optgroup label="sort">
+          <option value="depended" {{sort_selected_depended}}>depended</option>
+          <option value="recent" {{sort_selected_recent}}>recent</option>
+          <option value="starred" {{sort_selected_starred}}>starred</option>
+          <option value="score" {{sort_selected_score}}>score</option>
+        </optgroup>
+      </select>
+      &nbsp;
+      <input type="submit" value="search" />
+    {{#total}}
+      <div class="total">total: {{total}}</div>
+    {{/total}}
+
+    </form>
+    {{/hide_search}}
+
+    {{#about}}
+      <div class="about">
+        {{{html}}}
+      </div>
+    {{/about}}
+
+    {{#api}}
+      <div class="api">
+        {{{html}}}
+      </div>
+    {{/api}}
+
+    {{{body}}}
+
+  </body>
+</html>
