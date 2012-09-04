@@ -15,25 +15,40 @@
       <a href="api.html">API</a>
     </div>
 
+    {{^hide_search}}
     <form method="GET" action="/search" class="search">
-      <input id="query" name="query" type="search" value="" placeholder="search" />
+      <input id="query" name="query" type="search" value="{{query}}" placeholder="search" />
       &nbsp;
       <select name="sort">
         <optgroup label="sort">
-          <option value="depended" >depended</option>
-          <option value="recent" >recent</option>
-          <option value="starred" >starred</option>
-          <option value="score" >score</option>
+          <option value="depended" {{sort_selected_depended}}>depended</option>
+          <option value="recent" {{sort_selected_recent}}>recent</option>
+          <option value="starred" {{sort_selected_starred}}>starred</option>
+          <option value="score" {{sort_selected_score}}>score</option>
         </optgroup>
       </select>
       &nbsp;
       <input type="submit" value="search" />
+    {{#total}}
+      <div class="total">total: {{total}}</div>
+    {{/total}}
 
     </form>
+    {{/hide_search}}
 
+    {{#about}}
+      <div class="about">
+        {{{html}}}
+      </div>
+    {{/about}}
 
+    {{#api}}
+      <div class="api">
+        {{{html}}}
+      </div>
+    {{/api}}
 
-    
+    {{{body}}}
 
   </body>
 </html>
