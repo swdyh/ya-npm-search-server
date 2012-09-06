@@ -199,7 +199,7 @@ describe('web', function() {
         it('should return 200', function(done) {
             var u = 'http://localhost:' + port + '/'
             request({
-                uri: u,
+                uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
                 assert.ok(res.statusCode == 200)
@@ -213,7 +213,7 @@ describe('web', function() {
         it('should return 200', function(done) {
             var u = 'http://localhost:' + port + '/search?query=redis'
             request({
-                uri: u,
+                uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
                 assert.ok(res.statusCode == 200)
@@ -226,7 +226,7 @@ describe('web', function() {
         it('should return 200', function(done) {
             var u = 'http://localhost:' + port + '/search?query=redis&from=10&sort=starred'
             request({
-                uri: u,
+                uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
                 assert.ok(res.statusCode == 200)
