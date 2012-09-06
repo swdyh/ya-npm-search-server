@@ -136,6 +136,49 @@ describe('ya-npm-search', function() {
         })
     })
 
+    describe('patch()', function() {
+        it('should return patched object', function(done) {
+            request.put({
+                uri: esUrl + '/patch_test/1?refresh=true',
+                json: { a: 1, b: 2 }
+            }, function(err, val) {
+                yaNpmSearch.patch({
+                    uri: esUrl + '/patch_test/1',
+                    param: { refresh: true }
+                }, { b: 3, c: 1 }, function(err, val) {
+                    request({
+                        uri: esUrl + '/patch_test/1', json: true
+                    }, function(err, res, val) {
+                        assert.equal(val._source.a, 1)
+                        assert.equal(val._source.b, 3)
+                        assert.equal(val._source.c, 1)
+                        done()
+                    })
+                })
+            })
+        })
+
+        it('should return 404 error object', function(done) {
+            yaNpmSearch.patch({
+                uri: esUrl + '/patch_test/not_exists',
+                param: { refresh: true }
+            }, { b: 3, c: 1 }, function(err, val) {
+                assert.equal(err.message, '404')
+                done()
+            })
+        })
+
+        it('should return 400 error object', function(done) {
+            yaNpmSearch.patch({
+                uri: esUrl + '/patch_test/not_exists/foo/bar',
+                param: { refresh: true }
+            }, { b: 3, c: 1 }, function(err, val) {
+                assert.equal(err.message, '400')
+                done()
+            })
+        })
+    })
+
     // describe('()', function() {
     //     it('should return', function(done) {
     //         done()
