@@ -179,6 +179,27 @@ describe('ya-npm-search', function() {
         })
     })
 
+    describe('seq()', function() {
+        it('should return', function(done) {
+            var a = function(next) {
+                setTimeout(function() { next(null, 1) }, 10)
+            }
+            var b = function(next) {
+                setTimeout(function() { next(null, 2) }, 10)
+            }
+            var c = function(next) {
+                setTimeout(function() { next(new Error('c'), 3) }, 10)
+            }
+            yaNpmSearch.seq([a, b, c], 10, [], function(err, val) {
+                assert.equal(val[0], 1)
+                assert.equal(val[1], 2)
+                assert.equal(val[2], 3)
+                assert.ok(err[2])
+                done()
+            })
+        })
+    })
+
     // describe('()', function() {
     //     it('should return', function(done) {
     //         done()
