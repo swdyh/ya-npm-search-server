@@ -38,12 +38,14 @@ function append(callback) {
             }
             var div = document.createElement('div')
             div.innerHTML = val
+            var df = document.createDocumentFragment()
             for (var i = 0; i < div.childNodes.length; i++) {
                 var c = div.childNodes[i]
                 if ((/div/i).test(c.nodeName)) {
-                    n.parentNode.parentNode.insertBefore(c, n.parentNode)
+                    df.appendChild(c)
                 }
             }
+            n.parentNode.parentNode.insertBefore(df, n.parentNode)
             n.parentNode.removeChild(n)
         })
     }
