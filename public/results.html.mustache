@@ -19,12 +19,12 @@
           depended: {{depended}},
           starred: {{starred}},
 
-          {{#github_forks_count}}
+          {{#has_github_count}}
             <img src="github.svg" class="github" />
             forks: {{github_forks_count}},
             <img src="github.svg" class="github" />
             watchers: {{github_watchers_count}},
-          {{/github_forks_count}}
+          {{/has_github_count}}
 
           modified: {{#time}}{{modified}}{{/time}}
 
