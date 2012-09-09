@@ -21,10 +21,13 @@
       &nbsp;
       <select name="sort">
         <optgroup label="sort">
+          <option value="default" {{sort_selected_default}}>---</option>
           <option value="depended" {{sort_selected_depended}}>depended</option>
-          <option value="recent" {{sort_selected_recent}}>recent</option>
           <option value="starred" {{sort_selected_starred}}>starred</option>
-          <option value="score" {{sort_selected_score}}>score</option>
+          <option value="forks" {{sort_selected_forks}}>forks</option>
+          <option value="watchers" {{sort_selected_watchers}}>watchers</option>
+          <option value="recent" {{sort_selected_recent}}>recent</option>
+          <option value="score" {{sort_selected_score}}>text match score</option>
         </optgroup>
       </select>
       &nbsp;
