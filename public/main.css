@@ -96,7 +96,8 @@ code {
     border-radius: 0.4em;
     font-weight: normal;
 }
-.pkg_reactions img {
-    height: 1.2em;
-    vertical-align: -0.1em;
+.meta img.github {
+    height: 1.3em;
+    width: 1.3em;
+    vertical-align: top;
 }
