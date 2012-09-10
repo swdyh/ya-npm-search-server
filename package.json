@@ -21,6 +21,10 @@
     "scripts": {
         "test": "mocha test/test.js"
     },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/swdyh/ya-npm-search-server.git"
+    },
     "author": "swdyh",
     "license": "Apache License Version 2.0"
 }
