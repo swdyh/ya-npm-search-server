@@ -86,6 +86,9 @@
             "versions": {
                 "type" : "string",
                 "include_in_all" : false
+            },
+            "_max_count": {
+                "type": "long"
             }
         }
     }
