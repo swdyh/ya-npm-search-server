@@ -31,11 +31,11 @@ describe('ya-npm-search', function() {
 
     describe('getLastUpdate()', function() {
         it('should return update timestamp', function(done) {
-            var v = { updated: new Date().getTime() }
-            yaNpmSearch.updateLastUpdate(esUrl, v, function(err, val) {
+            var t = new Date().getTime()
+            yaNpmSearch.updateLastUpdate(esUrl, t, null, function(err, val) {
                 yaNpmSearch.getLastUpdate(esUrl, function(err, val) {
                     assert.ok(!err)
-                    assert.equal(val, String(v.updated))
+                    assert.equal(val, String(t))
                     done()
                 })
             })
