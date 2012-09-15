@@ -286,6 +286,44 @@ describe('ya-npm-search', function() {
         })
     })
 
+    describe('updateAllAttr()', function(done) {
+        it('should update attrs', function(done) {
+            var v = {
+                'a': { starred : 1, depended: 10 },
+                'b': { starred : 0 },
+                'c': { starred : 3 }
+            }
+            yn.updateAllAttrs(esUrl, v, function(err, val) {
+                assert.ok(!err)
+                yn._request({
+                    uri: esUrl + '/package/_mget',
+                    json: { ids: ['a', 'b'] }
+                }, function(err, val) {
+                    assert.equal(val.docs[0]._source.starred, 1)
+                    assert.equal(val.docs[0]._source.depended, 10)
+                    assert.equal(val.docs[1]._source.starred, 0)
+                    done()
+                })
+            })
+        })
+    })
+
+    // remote access!
+    describe.skip('updateViewAttrs()', function() {
+        it('should return ', function(done) {
+            yn.updateViewAttrs(esUrl, function(err, val) {
+                assert.ok(!err)
+                yn._request({
+                    uri: esUrl + '/package/redis'
+                }, function(err, val) {
+                    assert.ok(val._source.depended >= 0)
+                    assert.ok(val._source.starred >= 0)
+                    done()
+                })
+            })
+        })
+    })
+
     // describe('()', function() {
     //     it('should return', function(done) {
     //         done()
