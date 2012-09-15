@@ -223,6 +223,35 @@ describe('ya-npm-search', function() {
         })
     })
 
+    // remote access!
+    describe.skip('loadView()', function() {
+        it('should return starred count', function(done) {
+            yn.loadView('starred', function(err, val) {
+                var keys = Object.keys(val)
+                assert.ok(keys.length > 0)
+                assert.ok(val[keys[0]].starred >= 0)
+                done()
+            })
+        })
+
+        it('should return depended count', function(done) {
+            yn.loadView('depended', function(err, val) {
+                var keys = Object.keys(val)
+                assert.ok(keys.length > 0)
+                assert.ok(val[keys[0]].depended >= 0)
+                done()
+            })
+        })
+
+        it('should return empty', function(done) {
+            yn.loadView('else', function(err, val) {
+                var keys = Object.keys(val)
+                assert.equal(keys.length, 0)
+                done()
+            })
+        })
+    })
+
     // describe('()', function() {
     //     it('should return', function(done) {
     //         done()
