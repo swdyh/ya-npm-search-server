@@ -81,18 +81,6 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('postBulk()', function() {
-        it('should return ok', function(done) {
-            var d = [{ name: 'test-package-01' }, { name: 'test-package-02' }]
-            yn.postBulk(esUrl, d, function(err, val) {
-                assert.ok(!err)
-                assert.equal(val.items.length, 2)
-                assert.ok(val.items.every(function(i) { return i.index.ok }))
-                done()
-            })
-        })
-    })
-
     describe('convertPkg()', function() {
         it('should return converted package info', function(done) {
             var d = {
