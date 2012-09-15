@@ -107,18 +107,6 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('seqRequest()', function() {
-        it('should return request results', function(done) {
-            var rs = [{ uri: esUrl + '/_status', json: true, _silent: true },
-                      { uri: esUrl + '/_stats', json: true, _silent: true }]
-            yn.seqRequest(rs, [], function(err, val) {
-                assert.ok(!err)
-                assert.ok(val.every(function(i) { return i.ok } ))
-                done()
-            })
-        })
-    })
-
     describe('mergeViewAttr()', function() {
         it('should return object that include starred value', function(done) {
             var from = { rows: [{ key: ['a'], value: 5 }] }
