@@ -290,8 +290,8 @@ describe('ya-npm-search', function() {
             }
             yn.updatePackages(esUrl, pkgs, function(err, val) {
                 assert.ok(!err)
-                assert.equal(val.items.length, 2)
-                assert.ok(val.items.every(function(i) { return i.index.ok }))
+                assert.equal(val.errors.length, 0)
+                assert.equal(val.ok.length, 2)
                 yn._request({
                     uri: esUrl + '/package/_mget',
                     json: { ids: Object.keys(pkgs) }
