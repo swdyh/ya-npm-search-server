@@ -39,7 +39,10 @@ describe('ya-npm-search', function() {
                     uri: esUrl + '/package/_bulk?refresh=true',
                     body: body,
                     json: true
-                }, done)
+                }, function() {
+                    var t = String(new Date() - (7 * 24 * 60 * 60 * 1000))
+                    yn.updateLastUpdate(esUrl, t, 0, done)
+                })
             })
         })
     })
@@ -70,7 +73,9 @@ describe('ya-npm-search', function() {
                 yn.getLastUpdate(esUrl, function(err, val) {
                     assert.ok(!err)
                     assert.equal(val, String(t))
-                    done()
+                    request.del({
+                        uri: esUrl + '/update/' + t + '?refresh=true'
+                    }, done)
                 })
             })
         })
@@ -310,7 +315,7 @@ describe('ya-npm-search', function() {
 
     // remote access!
     describe.skip('updateViewAttrs()', function() {
-        it('should return ', function(done) {
+        it('should return no errors and update starred and depended values', function(done) {
             yn.updateViewAttrs(esUrl, function(err, val) {
                 assert.ok(!err)
                 yn._request({
@@ -318,6 +323,52 @@ describe('ya-npm-search', function() {
                 }, function(err, val) {
                     assert.ok(val._source.depended >= 0)
                     assert.ok(val._source.starred >= 0)
+                    done()
+                })
+            })
+        })
+    })
+
+    describe('updatePackages()', function() {
+        it('should return no error and update pakcages', function(done) {
+            var pkgs = {
+                'ya-npm-search-server': {
+                    name: 'ya-npm-search-server',
+                    description: 'desc'
+                },
+                'ddd': {
+                    name: 'ddd',
+                    description: 'ddd desc'
+                }
+            }
+            yn.updatePackages(esUrl, pkgs, function(err, val) {
+                assert.ok(!err)
+                assert.equal(val.items.length, 2)
+                assert.ok(val.items.every(function(i) { return i.index.ok }))
+                yn._request({
+                    uri: esUrl + '/package/_mget',
+                    json: { ids: Object.keys(pkgs) }
+                }, function(err, val) {
+                    assert.ok(val.docs[0]._source.repository)
+                    assert.ok(val.docs[0]._source.description)
+                    assert.ok(val.docs[1].exists)
+                    done()
+                })
+            }, { refresh: true })
+        })
+    })
+
+    // remote access!!
+    describe.skip('updateIndex()', function() {
+        it('should return', function(done) {
+            yn.updateIndex(esUrl, function(err, val) {
+                assert.ok(!err)
+                assert.ok(val.items.every(function(i) { return i.index.ok }))
+                var updated = val.updated
+                yn.getLastUpdate(esUrl, function(err, val) {
+                    if (updated) {
+                        assert.equal(val, updated)
+                    }
                     done()
                 })
             })
