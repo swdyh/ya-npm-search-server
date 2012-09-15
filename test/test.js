@@ -44,7 +44,7 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('initIndex()', function() {
+    describe.skip('initIndex()', function() {
         it('should return index mapping', function(done) {
             request.del({ uri: esUrl }, function(err, val) {
                 yn.initIndex(esUrl, function(err, val) {
