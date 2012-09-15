@@ -1,7 +1,7 @@
 var assert = require('assert')
 var path = require('path')
 var request = require('request')
-var yaNpmSearch = require(path.join(__dirname, '..', 'lib', 'ya-npm-search'))
+var yn = require(path.join(__dirname, '..', 'lib', 'ya-npm-search'))
 var web = require(path.join(__dirname, '..', 'lib', 'web'))
 
 var esUrl = (process.env.YA_NPM_SEARCH_TEST_ES_INDEX_URL ||
@@ -9,11 +9,48 @@ var esUrl = (process.env.YA_NPM_SEARCH_TEST_ES_INDEX_URL ||
 var port = '9991'
 
 describe('ya-npm-search', function() {
+    before(function(done) {
+        var packages = [
+            { name: 'a' },
+            { name: 'b' },
+            {
+                name: 'ya-npm-search-server',
+                repository: { url: 'https://github.com/swdyh/ya-npm-search-server.git' }
+            },
+            {
+                name: 'ya-npm-search-cli',
+                maintainers: [{ name: 'swdyh' }],
+                _github: {
+                    user: 'swdyh',
+                    repos: 'ya-npm-search-cli',
+                    ok: true,
+                    got_at: new Date(0)
+                }
+            },
+            { name: 'redis' }
+        ]
+        request.del({ uri: esUrl }, function(err, val) {
+            yn.initIndex(esUrl, function() {
+                var body = packages.map(function(i) {
+                    return JSON.stringify({ index: { _id: i.name } }) + '\n' +
+                        JSON.stringify(i) + '\n'
+                }).join('')
+                request.post({
+                    uri: esUrl + '/package/_bulk?refresh=true',
+                    body: body,
+                    json: true
+                }, function() {
+                    var t = String(new Date() - (7 * 24 * 60 * 60 * 1000))
+                    yn.updateLastUpdate(esUrl, t, 0, done)
+                })
+            })
+        })
+    })
 
-    describe('initIndex()', function() {
+    describe.skip('initIndex()', function() {
         it('should return index mapping', function(done) {
             request.del({ uri: esUrl }, function(err, val) {
-                yaNpmSearch.initIndex(esUrl, function(err, val) {
+                yn.initIndex(esUrl, function(err, val) {
                     assert.ok(!err)
                     assert.ok(val.ok)
                     request({
@@ -32,43 +69,14 @@ describe('ya-npm-search', function() {
     describe('getLastUpdate()', function() {
         it('should return update timestamp', function(done) {
             var t = new Date().getTime()
-            yaNpmSearch.updateLastUpdate(esUrl, t, null, function(err, val) {
-                yaNpmSearch.getLastUpdate(esUrl, function(err, val) {
+            yn.updateLastUpdate(esUrl, t, null, function(err, val) {
+                yn.getLastUpdate(esUrl, function(err, val) {
                     assert.ok(!err)
                     assert.equal(val, String(t))
-                    done()
+                    request.del({
+                        uri: esUrl + '/update/' + t + '?refresh=true'
+                    }, done)
                 })
-            })
-        })
-    })
-
-    describe('bulkUpdate()', function() {
-        it('should return ok', function(done) {
-            var d = {
-                'test-package-01': { name: 'test-package-01' },
-                'test-package-02': { name: 'test-package-02' }
-            }
-            yaNpmSearch.bulkUpdate(esUrl, {
-                keys: Object.keys(d),
-                size: 1,
-                data: d,
-                silent: true
-            }, function(err, val) {
-                assert.ok(!err)
-                assert.ok(val)
-                done()
-            })
-        })
-    })
-
-    describe('postBulk()', function() {
-        it('should return ok', function(done) {
-            var d = [{ name: 'test-package-01' }, { name: 'test-package-02' }]
-            yaNpmSearch.postBulk(esUrl, d, function(err, val) {
-                assert.ok(!err)
-                assert.equal(val.items.length, 2)
-                assert.ok(val.items.every(function(i) { return i.index.ok }))
-                done()
             })
         })
     })
@@ -90,7 +98,7 @@ describe('ya-npm-search', function() {
                 },
                 repository: 'https://github.com/bnoguchi/array-promise.git'
             }
-            var r = yaNpmSearch.convertPkg(d)
+            var r = yn.convertPkg(d)
             assert.ok(r)
             assert.equal(r.users.length, 3)
             assert.equal(r.versions.length, 4)
@@ -99,35 +107,13 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('seqRequest()', function() {
-        it('should return request results', function(done) {
-            var rs = [{ uri: esUrl + '/_status', json: true, _silent: true },
-                      { uri: esUrl + '/_stats', json: true, _silent: true }]
-            yaNpmSearch.seqRequest(rs, [], function(err, val) {
-                assert.ok(!err)
-                assert.ok(val.every(function(i) { return i.ok } ))
-                done()
-            })
-        })
-    })
-
-    describe('mergeViewAttr()', function() {
-        it('should return object that include starred value', function(done) {
-            var from = { rows: [{ key: ['a'], value: 5 }] }
-            var to = { a: {} }
-            var r = yaNpmSearch.mergeViewAttr(from, to, 'starred')
-            assert.ok(r.a.starred)
-            done()
-        })
-    })
-
     describe('countIndex()', function() {
         it('should return index count', function(done) {
-            yaNpmSearch.countIndex(esUrl, function(err, val) {
+            yn.countIndex(esUrl, function(err, val) {
                 assert.ok(!err)
                 assert.ok(val >= 0)
                 var cond = { term: { name: 'test' } }
-                yaNpmSearch.countIndex(esUrl, cond, function(err, val) {
+                yn.countIndex(esUrl, cond, function(err, val) {
                     assert.ok(!err)
                     assert.ok(val >= 0)
                     done()
@@ -142,7 +128,7 @@ describe('ya-npm-search', function() {
                 uri: esUrl + '/patch_test/1?refresh=true',
                 json: { a: 1, b: 2 }
             }, function(err, val) {
-                yaNpmSearch.patch({
+                yn.patch({
                     uri: esUrl + '/patch_test/1',
                     param: { refresh: true }
                 }, { b: 3, c: 1 }, function(err, val) {
@@ -159,7 +145,7 @@ describe('ya-npm-search', function() {
         })
 
         it('should return 404 error object', function(done) {
-            yaNpmSearch.patch({
+            yn.patch({
                 uri: esUrl + '/patch_test/not_exists',
                 param: { refresh: true }
             }, { b: 3, c: 1 }, function(err, val) {
@@ -169,7 +155,7 @@ describe('ya-npm-search', function() {
         })
 
         it('should return 400 error object', function(done) {
-            yaNpmSearch.patch({
+            yn.patch({
                 uri: esUrl + '/patch_test/not_exists/foo/bar',
                 param: { refresh: true }
             }, { b: 3, c: 1 }, function(err, val) {
@@ -190,12 +176,148 @@ describe('ya-npm-search', function() {
             var c = function(next) {
                 setTimeout(function() { next(new Error('c'), 3) }, 10)
             }
-            yaNpmSearch.seq([a, b, c], 10, [], function(err, val) {
+            yn.seq([a, b, c], 10, [], function(err, val) {
                 assert.equal(val[0], 1)
                 assert.equal(val[1], 2)
                 assert.equal(val[2], 3)
                 assert.ok(err[2])
                 done()
+            })
+        })
+    })
+
+    describe('_request()', function() {
+        it('should return json object', function(done) {
+            yn._request({ uri: esUrl + '/_status' }, function(err, val) {
+                assert.ok(val.ok)
+                done()
+            })
+        })
+
+        it('should return 400 err', function(done) {
+            yn._request({ uri: esUrl + '/_statuss' }, function(err, val) {
+                assert.equal(err.message, '400')
+                done()
+            })
+        })
+
+        it('should return 404 err', function(done) {
+            yn._request({ uri: esUrl + '/package/zzz' }, function(err, val) {
+                assert.equal(err.message, '404')
+                done()
+            })
+        })
+    })
+
+    // remote access!
+    describe.skip('loadView()', function() {
+        it('should return starred count', function(done) {
+            yn.loadView('starred', function(err, val) {
+                var keys = Object.keys(val)
+                assert.ok(keys.length > 0)
+                assert.ok(val[keys[0]].starred >= 0)
+                done()
+            })
+        })
+
+        it('should return depended count', function(done) {
+            yn.loadView('depended', function(err, val) {
+                var keys = Object.keys(val)
+                assert.ok(keys.length > 0)
+                assert.ok(val[keys[0]].depended >= 0)
+                done()
+            })
+        })
+
+        it('should return empty', function(done) {
+            yn.loadView('else', function(err, val) {
+                var keys = Object.keys(val)
+                assert.equal(keys.length, 0)
+                done()
+            })
+        })
+    })
+
+    describe('updateAllAttr()', function(done) {
+        it('should update attrs', function(done) {
+            var v = {
+                'a': { starred : 1, depended: 10 },
+                'b': { starred : 0 },
+                'c': { starred : 3 }
+            }
+            yn.updateAllAttrs(esUrl, v, function(err, val) {
+                assert.ok(!err)
+                yn._request({
+                    uri: esUrl + '/package/_mget',
+                    json: { ids: ['a', 'b'] }
+                }, function(err, val) {
+                    assert.equal(val.docs[0]._source.starred, 1)
+                    assert.equal(val.docs[0]._source.depended, 10)
+                    assert.equal(val.docs[1]._source.starred, 0)
+                    done()
+                })
+            })
+        })
+    })
+
+    // remote access!
+    describe.skip('updateViewAttrs()', function() {
+        it('should return no errors and update starred and depended values', function(done) {
+            yn.updateViewAttrs(esUrl, function(err, val) {
+                assert.ok(!err)
+                yn._request({
+                    uri: esUrl + '/package/redis'
+                }, function(err, val) {
+                    assert.ok(val._source.depended >= 0)
+                    assert.ok(val._source.starred >= 0)
+                    done()
+                })
+            })
+        })
+    })
+
+    describe('updatePackages()', function() {
+        it('should return no error and update pakcages', function(done) {
+            var pkgs = {
+                'ya-npm-search-server': {
+                    name: 'ya-npm-search-server',
+                    description: 'desc'
+                },
+                'ddd': {
+                    name: 'ddd',
+                    description: 'ddd desc'
+                }
+            }
+            yn.updatePackages(esUrl, pkgs, function(err, val) {
+                assert.ok(!err)
+                assert.equal(val.errors.length, 0)
+                assert.equal(val.ok.length, 2)
+                yn._request({
+                    uri: esUrl + '/package/_mget',
+                    json: { ids: Object.keys(pkgs) }
+                }, function(err, val) {
+                    assert.ok(val.docs[0]._source.repository)
+                    assert.ok(val.docs[0]._source.description)
+                    assert.ok(val.docs[1].exists)
+                    done()
+                })
+            }, { refresh: true })
+        })
+    })
+
+    // remote access!!
+    describe.skip('updateIndex()', function() {
+        it('should return', function(done) {
+            yn.updateIndex(esUrl, function(err, val) {
+                assert.ok(!err)
+                assert.ok(val.items.every(function(i) { return i.index.ok }))
+                var updated = val.updated
+                yn.getLastUpdate(esUrl, function(err, val) {
+                    if (updated) {
+                        assert.equal(val, updated)
+                    }
+                    done()
+                })
             })
         })
     })

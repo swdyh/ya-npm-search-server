@@ -62,7 +62,7 @@ describe('gh', function() {
             ]
             gh.bulkUpdatePackage(esUrl, list, function(err, val) {
                 assert.ok(val.ok_ids.length === 2)
-                gh._request({
+                yn._request({
                     uri: esUrl + '/package/a'
                 }, function(err, val) {
                     assert.equal(val._source.foo, 1)
@@ -71,30 +71,6 @@ describe('gh', function() {
             })
         })
     })
-
-    describe('_request()', function() {
-        it('should return json object', function(done) {
-            gh._request({ uri: esUrl + '/_status' }, function(err, val) {
-                assert.ok(val.ok)
-                done()
-            })
-        })
-
-        it('should return 400 err', function(done) {
-            gh._request({ uri: esUrl + '/_statuss' }, function(err, val) {
-                assert.equal(err.message, '400')
-                done()
-            })
-        })
-
-        it('should return 404 err', function(done) {
-            gh._request({ uri: esUrl + '/package/zzz' }, function(err, val) {
-                assert.equal(err.message, '404')
-                done()
-            })
-        })
-    })
-
 
     describe('detectRepos()', function() {
         it('should return user and repos with https:', function() {
@@ -225,7 +201,7 @@ describe('gh', function() {
             gh.findAllRepos(esUrl, 5, function(err, val) {
                 assert.equal(val.errors.length, 0)
                 assert.equal(val.ok_ids.length, 1)
-                gh._request({
+                yn._request({
                     uri: esUrl + '/package/ya-npm-search-server'
                 }, function(err, val) {
                     assert.ok(val._source._github.watchers_count >= 0)
@@ -243,7 +219,7 @@ describe('gh', function() {
                 assert.equal(val.errors.length, 0)
                 assert.equal(val.ok_ids.length, 1)
                 var d = new Date(new Date() - 5000)
-                gh._request({
+                yn._request({
                     uri: esUrl + '/package/ya-npm-search-cli'
                 }, function(err, val) {
                     assert.ok(val._source._github.watchers_count >= 0)
