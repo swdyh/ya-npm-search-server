@@ -107,16 +107,6 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('mergeViewAttr()', function() {
-        it('should return object that include starred value', function(done) {
-            var from = { rows: [{ key: ['a'], value: 5 }] }
-            var to = { a: {} }
-            var r = yn.mergeViewAttr(from, to, 'starred')
-            assert.ok(r.a.starred)
-            done()
-        })
-    })
-
     describe('countIndex()', function() {
         it('should return index count', function(done) {
             yn.countIndex(esUrl, function(err, val) {
