@@ -81,25 +81,6 @@ describe('ya-npm-search', function() {
         })
     })
 
-    describe('bulkUpdate()', function() {
-        it('should return ok', function(done) {
-            var d = {
-                'test-package-01': { name: 'test-package-01' },
-                'test-package-02': { name: 'test-package-02' }
-            }
-            yn.bulkUpdate(esUrl, {
-                keys: Object.keys(d),
-                size: 1,
-                data: d,
-                silent: true
-            }, function(err, val) {
-                assert.ok(!err)
-                assert.ok(val)
-                done()
-            })
-        })
-    })
-
     describe('postBulk()', function() {
         it('should return ok', function(done) {
             var d = [{ name: 'test-package-01' }, { name: 'test-package-02' }]
