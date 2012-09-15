@@ -9,6 +9,40 @@ var esUrl = (process.env.YA_NPM_SEARCH_TEST_ES_INDEX_URL ||
 var port = '9991'
 
 describe('ya-npm-search', function() {
+    before(function(done) {
+        var packages = [
+            { name: 'a' },
+            { name: 'b' },
+            {
+                name: 'ya-npm-search-server',
+                repository: { url: 'https://github.com/swdyh/ya-npm-search-server.git' }
+            },
+            {
+                name: 'ya-npm-search-cli',
+                maintainers: [{ name: 'swdyh' }],
+                _github: {
+                    user: 'swdyh',
+                    repos: 'ya-npm-search-cli',
+                    ok: true,
+                    got_at: new Date(0)
+                }
+            },
+            { name: 'redis' }
+        ]
+        request.del({ uri: esUrl }, function(err, val) {
+            yn.initIndex(esUrl, function() {
+                var body = packages.map(function(i) {
+                    return JSON.stringify({ index: { _id: i.name } }) + '\n' +
+                        JSON.stringify(i) + '\n'
+                }).join('')
+                request.post({
+                    uri: esUrl + '/package/_bulk?refresh=true',
+                    body: body,
+                    json: true
+                }, done)
+            })
+        })
+    })
 
     describe('initIndex()', function() {
         it('should return index mapping', function(done) {
