@@ -16,29 +16,35 @@
               keywords: {{keywords}}
             </div>
           {{/keywords}}
-          depended: {{depended}},
-          starred: {{starred}},
-
-          {{#has_github_count}}
-            <img src="github.svg" class="github" />
-            forks: {{github_forks_count}},
-            <img src="github.svg" class="github" />
-            watchers: {{github_watchers_count}},
-          {{/has_github_count}}
-
-          modified: {{#time}}{{modified}}{{/time}}
-
-          <div style="padding: 0.5em 0;">
-            <a href="https://npmjs.org/package/{{name}}">https://npmjs.org/package/{{name}}</a>&nbsp;
-            {{#github}}<a href="{{url}}">{{url}}</a>{{/github}}
+          <div>
+            modified: {{#time}}{{modified}}{{/time}}
           </div>
 
-          <div>
+          <div class="npm">
+            <img src="npm.png" />
+            depended: {{depended}},
+            starred: {{starred}}
+            <a class="link_npm" href="https://npmjs.org/package/{{name}}"> https://npmjs.org/package/{{name}}</a>
+          </div>
+
+          {{#github}}
+          <div class="github">
+            <img src="github.svg" class="github" />
+            {{#has_github_count}}
+              watchers: {{github_watchers_count}},
+              forks: {{github_forks_count}}
+            {{/has_github_count}}
+             <a class="link_github" href="{{url}}">{{url}}</a>
+          </div>
+          {{/github}}
+
+          <div class="maintainers">
             {{#maintainers}}
-              {{#gravatar}}<img class="gravatar" src="{{gravatar}}" />{{/gravatar}}
-              <a href="{{npm}}">{{name}}</a>
+            {{#gravatar}}<img class="gravatar" src="{{gravatar}}" />{{/gravatar}}
+            <a href="{{npm}}">{{name}}</a> &nbsp;
             {{/maintainers}}
           </div>
+
         </div>
       </div>
     </div>

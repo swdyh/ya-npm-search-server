@@ -101,3 +101,15 @@ code {
     width: 1.3em;
     vertical-align: top;
 }
+.npm {
+    margin-top: 0.2em;
+    padding: 0 0 0 2px;
+}
+.npm img, .github img {
+    vertical-align: middle;
+}
+.maintainers {
+    margin: 0.3em 0 0 0;
+}
+
+
