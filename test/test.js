@@ -345,7 +345,7 @@ describe('web', function() {
                 uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.ok(res.statusCode == 200)
+                assert.equal(res.statusCode, 200)
                 done()
             })
         })
@@ -359,7 +359,7 @@ describe('web', function() {
                 uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.ok(res.statusCode == 200)
+                assert.equal(res.statusCode, 200)
                 done()
             })
         })
@@ -372,7 +372,7 @@ describe('web', function() {
                 uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.ok(res.statusCode == 200)
+                assert.equal(res.statusCode, 200)
                 done()
             })
         })
@@ -399,7 +399,7 @@ describe('web', function() {
                 json: true
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.ok(res.statusCode == 200)
+                assert.equal(res.statusCode, 200)
                 assert.ok(val.results)
                 assert.ok(val.total >= 0 )
                 assert.equal(res.header('Access-Control-Allow-Origin'), '*')
@@ -425,7 +425,7 @@ describe('web', function() {
                 }
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.ok(res.statusCode == 200)
+                assert.equal(res.statusCode, 200)
                 assert.ok(val.hits.total >= 0)
                 assert.equal(res.header('Access-Control-Allow-Origin'), '*')
                 assert.equal(res.header('Content-Type'), 'application/json')
