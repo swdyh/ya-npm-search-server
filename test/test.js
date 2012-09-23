@@ -379,16 +379,13 @@ describe('web', function() {
     })
 
     describe('show search page with no query', function() {
-        it('should redirect /', function(done) {
+        it('should show all results', function(done) {
             var u = 'http://localhost:' + port + '/search?query='
             request({
-                uri: u,
-                followRedirect: false
+                uri: u
             }, function(err, res, val) {
                 assert.ok(!err)
-                assert.equal(res.statusCode, 302)
-                assert.equal(res.header('Location'),
-                             'http://localhost:' + port + '/')
+                assert.equal(res.statusCode, 200)
                 done()
             })
         })
