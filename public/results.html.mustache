@@ -23,7 +23,7 @@
           <div class="npm">
             <img src="npm.png" />
             depended: {{depended}},
-            starred: {{starred}}
+            star: {{starred}}
             <a class="link_npm" href="https://npmjs.org/package/{{name}}"> https://npmjs.org/package/{{name}}</a>
           </div>
 
@@ -31,8 +31,8 @@
           <div class="github">
             <img src="github.svg" class="github" />
             {{#has_github_count}}
-              watchers: {{github_watchers_count}},
-              forks: {{github_forks_count}}
+              star: {{github_watchers_count}},
+              fork: {{github_forks_count}}
             {{/has_github_count}}
              <a class="link_github" href="{{url}}">{{url}}</a>
           </div>
